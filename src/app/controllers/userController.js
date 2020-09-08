@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const authConfig = require('../../config/auth')
 
 const User = require('../models/User');
+const Address = require('../models/Address');
 
 const router = express.Router();
 
@@ -14,6 +15,7 @@ function generateToken(params = {}) {
   });
 }
 
+// register user
 router.post('/register', async (req, res) => {
   const { email } = req.body;
 
@@ -35,6 +37,7 @@ router.post('/register', async (req, res) => {
   }
 });
 
+// get token
 router.post('/auth', async (req, res) => {
   const { email, password } = req.body;
 
@@ -55,14 +58,18 @@ router.post('/auth', async (req, res) => {
   });
 });
 
-router.get('/all', (req, res) => {
-  User.find({}, (error, users) => {
-    if(error){
-      res.send("Error.");
-      next();
-    }
-    res.json({ users });
-  }).populate('address')
+// display all
+router.get('/all', async (req, res) => {
+  try {
+    const users = await User.find({}).populate('address');
+    users.forEach(async (user) => {
+      const address = await Address.find({ user: user.id });
+      user.address = address;
+    });
+    return res.send({ users })
+  } catch(err) {
+    return res.status(400).send({ error: "Error finding the users." })
+  }
 });
 
 router.get('/:userId', async (req, res) => {

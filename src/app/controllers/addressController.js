@@ -12,6 +12,7 @@ const router = express.Router();
 
 router.use(authMiddleware);
 
+// display all
 router.get('/', async (req, res) => {
   Address.find({}, (error, address) => {
     if(error){
@@ -22,6 +23,7 @@ router.get('/', async (req, res) => {
   }).populate('user');
 });
 
+// CREATE
 router.post('/', async (req, res) => {
   try {
     const address = await Address.create({ ...req.body, user: req.userId });
@@ -32,6 +34,7 @@ router.post('/', async (req, res) => {
   }
 });
 
+// READ
 router.get('/:addressId', async (req, res) => {
   try {
     const address = await Address.findById(req.params.addressId).populate('user');
@@ -42,6 +45,7 @@ router.get('/:addressId', async (req, res) => {
   }
 });
 
+// UPDATE
 router.put('/:addressId', async (req, res) => {
   try {
     const { cep, street, number } = req.body;
@@ -57,6 +61,7 @@ router.put('/:addressId', async (req, res) => {
   }
 });
 
+// DELETE
 router.delete('/:addressId', async (req, res) => {
   try {
     const address = await Address.findByIdAndRemove(req.params.addressId).populate('user');

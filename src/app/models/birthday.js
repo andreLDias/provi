@@ -2,8 +2,8 @@ const mongoose = require('../../database');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 
-const PhoneSchema = new mongoose.Schema({
-  phoneNumber:{
+const BirthdaySchema = new mongoose.Schema({
+  birthday:{
     type: String,
     require: true,
   },
@@ -22,6 +22,6 @@ const PhoneSchema = new mongoose.Schema({
   }
 })
 
-const Phone = mongoose.model('Phone', PhoneSchema);
+const Birthday = mongoose.model('Birthday', BirthdaySchema);
 
-module.exports = Phone;
+module.exports = Birthday;
