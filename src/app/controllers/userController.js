@@ -2,11 +2,17 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const authConfig = require('../config/auth')
+const authConfig = require('../../config/auth')
 
-const User = require('../models/user');
+const User = require('../models/User');
 
 const router = express.Router();
+
+function generateToken(params = {}) {
+  return jwt.sign(params, authConfig.secret, {
+    expiresIn: 86400,
+  });
+}
 
 router.post('/register', async (req, res) => {
   const { email } = req.body;
@@ -19,7 +25,11 @@ router.post('/register', async (req, res) => {
 
     user.password = undefined; // para nao mostrar o password
 
-    return res.send({ user });
+    res.send({
+      user,
+      token: generateToken({ id: user.id })
+    });
+
   } catch {
     return res.status(400).send({ error: "Registration failed." })
   }
@@ -39,11 +49,10 @@ router.post('/auth', async (req, res) => {
 
   user.password = undefined;
 
-  const token = jwt.sign({ id: user.id }, authConfig.secret, {
-    expiresIn: 86400,
+  res.send({
+    user,
+    token: generateToken({ id: user.id })
   });
-
-  res.send({ user, token });
 });
 
 router.get('/all', (req, res) => {
@@ -52,8 +61,31 @@ router.get('/all', (req, res) => {
       res.send("Error.");
       next();
     }
-    res.json(users);
-  })
-})
+    res.json({ users });
+  }).populate('address')
+});
+
+router.get('/:userId', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId).populate('address');
+
+    return res.send({ user })
+  } catch(err) {
+    return res.status(400).send({ error: "Error finding the user." })
+  }
+});
+
+// TO-DO pesquisar os address via user
+router.get('/:userId/addresses', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId).populate('address');
+    const addresses = await Address.findBy({ user: userId }).populate('user');
+
+    return res.send({ addresses })
+  } catch(err) {
+    return res.status(400).send({ error: "Error finding the address." })
+  }
+});
+
 
 module.exports = app => app.use('/users', router);

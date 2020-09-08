@@ -1,4 +1,4 @@
-const mongoose = require('../database');
+const mongoose = require('../../database');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 
@@ -6,18 +6,18 @@ const UserSchema = new mongoose.Schema({
   email: {
     type: String,
     unique: true,
-    required: true,
+    require: true,
     lowercase: true,
   },
   password: {
     type: String,
-    required: true,
+    require: true,
     select: false, // Não traz a password no select
   },
-  token: {
-    type: String,
-    unique: true,
-  },
+  address: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Address',
+  }],
   cpf: {
     type: String,
     unique: true,
