@@ -14,23 +14,7 @@ const UserSchema = new mongoose.Schema({
     require: true,
     select: false, // Não traz a password no select
   },
-  address: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Address',
-  }],
   cpf: {
-    type: String,
-    unique: true,
-  },
-  firstName: {
-    type: String,
-    unique: true,
-  },
-  lastName: {
-    type: String,
-    unique: true,
-  },
-  birthday: {
     type: String,
     unique: true,
   },

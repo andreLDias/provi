@@ -2,11 +2,10 @@ const mongoose = require('../../database');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 
-const PhoneSchema = new mongoose.Schema({
-  phoneNumber: {
+const CpfSchema = new mongoose.Schema({
+  cpf:{
     type: String,
     require: true,
-    unique: true,
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
@@ -23,6 +22,6 @@ const PhoneSchema = new mongoose.Schema({
   }
 })
 
-const Phone = mongoose.model('Phone', PhoneSchema);
+const Cpf = mongoose.model('Cpf', CpfSchema);
 
-module.exports = Phone;
+module.exports = Cpf;

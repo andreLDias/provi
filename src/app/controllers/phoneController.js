@@ -20,16 +20,30 @@ router.get('/', async (req, res) => {
       next();
     }
     res.json({ phone });
-  }).populate('user');
+  });
 });
 
 // CREATE
 router.post('/', async (req, res) => {
   try {
-    const phone = await Phone.create({ ...req.body, user: req.userId });
+    const phoneNumber = req.body.phoneNumber;
+    const old_number = await Phone.findOne({
+      phoneNumber: phoneNumber,
+      user: req.userId
+    });
+    if(old_number) {
+      old_number.updateAt = Date.now();
+      await old_number.save();
+      return res.send({ old_number })
+    }
+    if (!phoneNumber) {
+      throw new Error("Undefined phone.")
+    }
+    const phone = await Phone.create({ phoneNumber, user: req.userId });
 
     return res.send({ phone })
   } catch (err) {
+    console.log("Errors", err);
     return res.status(400).send({ error: "Error creating new phone." })
   }
 });

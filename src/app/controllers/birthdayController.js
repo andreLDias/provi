@@ -25,8 +25,20 @@ router.get('/', async (req, res) => {
 // CREATE
 router.post('/', async (req, res) => {
   try {
+    const birth = req.body.birthday
+    const old_birthday = await Birthday.findOne({
+      birthday: birth,
+      user: req.userId
+    });
+    if(old_birthday) {
+      old_birthday.updateAt = Date.now();
+      await old_birthday.save();
+      return res.send({ old_birthday })
+    }
+    if (!phoneNumber) {
+      throw new Error("Undefined phone.")
+    }
     const birthday = await Birthday.create({ ...req.body, user: req.userId });
-
     return res.send({ birthday })
   } catch (err) {
     return res.status(400).send({ error: "Error creating new Birthday." })

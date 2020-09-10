@@ -30,6 +30,22 @@ router.post('/', async (req, res) => {
     firstName = data.split(" ")[0];
     lastNameArr = data.split(" ").slice(1);
     lastName = lastNameArr.toString().replace(/,/gm, " ");
+
+    const old_name = await Name.findOne({
+      firstName: firstName,
+      lastName: lastName,
+      user: req.userId
+    });
+
+    if(old_name) {
+      old_name.updateAt = Date.now();
+      await old_name.save();
+      return res.send({ old_name })
+    }
+
+    if (!data) {
+      throw new Error("Undefined name.")
+    }
     const name = await Name.create({ firstName: firstName, lastName: lastName, user: req.userId });
 
     return res.send({ name })

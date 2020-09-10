@@ -20,12 +20,27 @@ router.get('/', async (req, res) => {
       next();
     }
     res.json({ address });
-  }).populate('user');
+  });
 });
 
 // CREATE
 router.post('/', async (req, res) => {
   try {
+    const { cep, street, number, complement, city, state } = req.body
+    const old_address = await Address.findOne({
+      cep: cep,
+      street: street,
+      number: number,
+      complement: complement,
+      city: city,
+      state: state,
+      user: req.userId
+    });
+    if(old_address) {
+      old_address.updateAt = Date.now;
+      await old_address.save();
+      return res.send({ old_address })
+    }
     const address = await Address.create({ ...req.body, user: req.userId });
 
     return res.send({ address })
@@ -37,7 +52,7 @@ router.post('/', async (req, res) => {
 // READ
 router.get('/:addressId', async (req, res) => {
   try {
-    const address = await Address.findById(req.params.addressId).populate('user');
+    const address = await Address.findById(req.params.addressId);
 
     return res.send({ address })
   } catch(err) {
@@ -53,7 +68,7 @@ router.put('/:addressId', async (req, res) => {
       cep,
       street,
       number
-    }, { new: true }).populate('user');
+    }, { new: true });
 
     return res.send({ address })
   } catch(err) {
@@ -64,7 +79,7 @@ router.put('/:addressId', async (req, res) => {
 // DELETE
 router.delete('/:addressId', async (req, res) => {
   try {
-    const address = await Address.findByIdAndRemove(req.params.addressId).populate('user');
+    const address = await Address.findByIdAndRemove(req.params.addressId);
 
     return res.send({ ok: true })
   } catch(err) {

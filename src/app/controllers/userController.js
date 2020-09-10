@@ -1,11 +1,11 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { cpfValidator } = require('../validators')
 
 const authConfig = require('../../config/auth')
 
 const User = require('../models/User');
-const Address = require('../models/Address');
 
 const router = express.Router();
 
@@ -61,11 +61,7 @@ router.post('/auth', async (req, res) => {
 // display all
 router.get('/all', async (req, res) => {
   try {
-    const users = await User.find({}).populate('address');
-    users.forEach(async (user) => {
-      const address = await Address.find({ user: user.id });
-      user.address = address;
-    });
+    const users = await User.find({});
     return res.send({ users })
   } catch(err) {
     return res.status(400).send({ error: "Error finding the users." })
@@ -81,18 +77,5 @@ router.get('/:userId', async (req, res) => {
     return res.status(400).send({ error: "Error finding the user." })
   }
 });
-
-// TO-DO pesquisar os address via user
-router.get('/:userId/addresses', async (req, res) => {
-  try {
-    const user = await User.findById(req.params.userId).populate('address');
-    const addresses = await Address.findBy({ user: userId }).populate('user');
-
-    return res.send({ addresses })
-  } catch(err) {
-    return res.status(400).send({ error: "Error finding the address." })
-  }
-});
-
 
 module.exports = app => app.use('/users', router);
