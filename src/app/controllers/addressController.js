@@ -1,6 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const cepValidator = require('cep-promise');
 
 const authMiddleware = require('../middlewares/auth');
 
@@ -27,7 +28,15 @@ router.get('/', async (req, res) => {
 // CREATE
 router.post('/', async (req, res) => {
   try {
-    const { cep, street, number, complement, city, state } = req.body
+    let { cep, street, number, complement, city, state } = req.body
+
+    const result = await cepValidator(cep)
+    if (!state) { state = (result.state); };
+    if (!street) { street = (result.street); };
+    if (!city) { city = (result.city); };
+    if (!complement) { number = "Sem complemento." };
+    if (!number) { number = 0 };
+
     const old_address = await Address.findOne({
       cep: cep,
       street: street,
@@ -42,7 +51,7 @@ router.post('/', async (req, res) => {
       await old_address.save();
       return res.send({ old_address })
     }
-    const address = await Address.create({ ...req.body, user: req.userId });
+    const address = await Address.create({ cep, street, number, complement, city, state, user: req.userId });
     const step = await Step.findOneAndUpdate({
       user: req.userId
     }, {
