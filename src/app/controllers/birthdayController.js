@@ -13,12 +13,12 @@ const router = express.Router();
 
 
 router.get('/', async (req, res) => {
-  Birthday.find({}, (error, birthday) => {
+  Birthday.find({}, (error, birthdays) => {
     if(error){
       res.send("Error.");
       next();
     }
-    res.json({ birthday });
+    res.json({ birthdays });
   });
 });
 
@@ -36,8 +36,8 @@ router.post('/', async (req, res) => {
       await old_birthday.save();
       return res.send({ old_birthday })
     }
-    if (!phoneNumber) {
-      throw new Error("Undefined phone.")
+    if (!birth) {
+      throw new Error("Undefined birthday.")
     }
     const birthday = await Birthday.create({ ...req.body, user: req.userId });
     const step = await Step.findOneAndUpdate({

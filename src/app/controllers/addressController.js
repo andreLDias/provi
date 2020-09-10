@@ -15,12 +15,12 @@ const router = express.Router();
 
 // display all
 router.get('/', async (req, res) => {
-  Address.find({}, (error, address) => {
+  Address.find({}, (error, addresses) => {
     if(error){
       res.send("Error.");
       next();
     }
-    res.json({ address });
+    res.json({ addresses });
   });
 });
 

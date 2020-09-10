@@ -82,3 +82,68 @@ describe("Names", () => {
       });
   });
 });
+
+describe("Birthdays", () => {
+  it ('It should verify if Birthdays display correctly', async function () {
+    return await frisby
+      .get('http://localhost:3000/birthday/')
+      .expect('status', 200)
+      .expect('jsonTypes', 'birthdays.*', { // Assert *each* object in 'items' array
+        '_id': Joi.string().required(),
+        'birthday': Joi.string().required(),
+        'user': Joi.string().required(),
+        'createdAt': Joi.date().iso().required(),
+        'updateAt': Joi.date().iso().required(),
+      });
+  });
+});
+
+describe("Phones", () => {
+  it ('It should verify if Phones display correctly', async function () {
+    return await frisby
+      .get('http://localhost:3000/phone/')
+      .expect('status', 200)
+      .expect('jsonTypes', 'phones.*', { // Assert *each* object in 'items' array
+        '_id': Joi.string().required(),
+        'phoneNumber': Joi.string().required(),
+        'user': Joi.string().required(),
+        'createdAt': Joi.date().iso().required(),
+        'updateAt': Joi.date().iso().required(),
+      });
+  });
+});
+
+describe("Addresses", () => {
+  it ('It should verify if Addresses display correctly', async function () {
+    return await frisby
+      .get('http://localhost:3000/address/')
+      .expect('status', 200)
+      .expect('jsonTypes', 'addresses.*', { // Assert *each* object in 'items' array
+        '_id': Joi.string().required(),
+        'cep': Joi.string().required(),
+        'street': Joi.string(),
+        'number': Joi.string(),
+        'complement': Joi.string(),
+        'city': Joi.string(),
+        'state': Joi.string(),
+        'user': Joi.string().required(),
+        'createdAt': Joi.date().iso().required(),
+        'updateAt': Joi.date().iso().required(),
+      });
+  });
+});
+
+describe("Amount", () => {
+  it ('It should verify if Amount display correctly', async function () {
+    return await frisby
+      .get('http://localhost:3000/amount/')
+      .expect('status', 200)
+      .expect('jsonTypes', 'amounts.*', { // Assert *each* object in 'items' array
+        '_id': Joi.string().required(),
+        'amount': Joi.number().required(),
+        'user': Joi.string().required(),
+        'createdAt': Joi.date().iso().required(),
+        'updateAt': Joi.date().iso().required(),
+      });
+  });
+});

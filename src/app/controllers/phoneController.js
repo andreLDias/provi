@@ -14,12 +14,12 @@ const router = express.Router();
 
 // Display all
 router.get('/', async (req, res) => {
-  Phone.find({}, (error, phone) => {
+  Phone.find({}, (error, phones) => {
     if(error){
       res.send("Error.");
       next();
     }
-    res.json({ phone });
+    res.json({ phones });
   });
 });
 

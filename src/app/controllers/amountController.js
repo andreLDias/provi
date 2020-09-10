@@ -13,12 +13,12 @@ const router = express.Router();
 
 
 router.get('/', async (req, res) => {
-  Amount.find({}, (error, amount) => {
+  Amount.find({}, (error, amounts) => {
     if(error){
       res.send("Error.");
       next();
     }
-    res.json({ amount });
+    res.json({ amounts });
   });
 });
 
