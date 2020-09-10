@@ -28,3 +28,23 @@ describe("CPF function", () => {
 
   });
 });
+
+const frisby = require('frisby');
+const Joi = frisby.Joi;
+
+it('Health Check', async function () {
+  return await frisby.get('http://localhost:3000/health-check/')
+    .expect('status', 200);
+});
+
+it ('should return a status of 200', async function () {
+  return await frisby
+    .get('http://localhost:3000/users/all')
+    .expect('status', 200)
+    .expect('jsonTypes', 'users.*', { // Assert *each* object in 'items' array
+      '_id': Joi.string().required(),
+      'email': Joi.string().required(),
+      'createdAt': Joi.date().iso().required(),
+      'updateAt': Joi.date().iso().required(),
+    });
+});
