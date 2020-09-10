@@ -55,7 +55,7 @@ router.post('/', async (req, res) => {
       next_end_point: "birthday_step",
     })
 
-    return res.send({ name, step })
+    return res.send({ name, success: true, next_end_point: 'birthday-step' });
   } catch (err) {
     return res.status(400).send({ error: "Error creating new name." })
   }

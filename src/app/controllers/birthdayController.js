@@ -46,7 +46,7 @@ router.post('/', async (req, res) => {
       currentStep: "birthday_step",
       next_end_point: "phone_step",
     })
-    return res.send({ birthday, step })
+    return res.send({ birthday, success: true, next_end_point: 'phone-step' });
   } catch (err) {
     return res.status(400).send({ error: "Error creating new Birthday." })
   }

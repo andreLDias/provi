@@ -48,7 +48,7 @@ router.post('/', async (req, res) => {
       next_end_point: "address_step",
     })
 
-    return res.send({ phone, step })
+    return res.send({ phone, success: true, next_end_point: 'address-step' });
   } catch (err) {
     console.log("Errors", err);
     return res.status(400).send({ error: "Error creating new phone." })

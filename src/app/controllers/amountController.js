@@ -34,7 +34,7 @@ router.post('/', async (req, res) => {
       next_end_point: "steps_over",
       isOver: true,
     })
-    return res.send({ amount, step })
+    return res.send({ amount, success: true, next_end_point: 'Steps are over.' });
   } catch (err) {
     return res.status(400).send({ error: "Error creating new Amount." })
   }

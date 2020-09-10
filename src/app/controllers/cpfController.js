@@ -1,7 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { cpfValidator } = require('../validators')
+const { cpfValidator } = require('../validators/')
 
 const authMiddleware = require('../middlewares/auth');
 
@@ -29,9 +29,12 @@ router.get('/', async (req, res) => {
 // CREATE
 router.post('/', async (req, res) => {
   try {
-    const cpfNumber = req.body.cpfNumber;
+    const cpf = req.body.cpf;
+    if(!cpfValidator(cpf)) {
+      return res.status(400).send({ error: "Invalid CPF." })
+    }
     const old_cpf = await Cpf.findOne({
-      cpfNumber: cpfNumber,
+      cpf: cpf,
       user: req.userId
     });
     if(old_cpf) {
@@ -39,10 +42,10 @@ router.post('/', async (req, res) => {
       await old_cpf.save();
       return res.send({ old_cpf })
     }
-    if (!cpfNumber) {
+    if (!cpf) {
       throw new Error("Undefined cpf.")
     }
-    const cpf = await Cpf.create({ cpfNumber, user: req.userId });
+    const cpf_instance = await Cpf.create({ cpf, user: req.userId });
     const step = await Step.findOneAndUpdate({
       user: req.userId
     }, {
@@ -50,7 +53,7 @@ router.post('/', async (req, res) => {
       next_end_point: "name_step",
     })
 
-    return res.send({ cpf, step })
+    return res.send({ cpf_instance, success: true, next_end_point: 'name-step' })
   } catch (err) {
     console.log("Errors", err);
     return res.status(400).send({ error: "Error creating new cpf." })

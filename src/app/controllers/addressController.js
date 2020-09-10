@@ -49,7 +49,7 @@ router.post('/', async (req, res) => {
       currentStep: "address_step",
       next_end_point: "amount_step",
     });
-    return res.send({ address, step })
+    return res.send({ address, success: true, next_end_point: 'amount-date' });
   } catch (err) {
     return res.status(400).send({ error: "Error creating new Address." })
   }
