@@ -1,7 +1,6 @@
 const { cpfValidator } = require('../app/validators');
-const { cpfValidator } = require('../app/validators');
 
-describe("Filter function", () => {
+describe("CPF function", () => {
   test("it should verify if the cpf is valid (w/o pattern)", () => {
     const input = "44496561808";
 
@@ -28,5 +27,4 @@ describe("Filter function", () => {
     expect(cpfValidator(input)).toEqual(output);
 
   });
-
 });
