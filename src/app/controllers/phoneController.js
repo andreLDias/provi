@@ -11,7 +11,6 @@ const Step = require('../models/Step');
 
 const router = express.Router();
 
-router.use(authMiddleware);
 
 // Display all
 router.get('/', async (req, res) => {
@@ -24,6 +23,7 @@ router.get('/', async (req, res) => {
   });
 });
 
+router.use(authMiddleware);
 // CREATE
 router.post('/', async (req, res) => {
   try {

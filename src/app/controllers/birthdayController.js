@@ -11,7 +11,6 @@ const Step = require('../models/Step');
 
 const router = express.Router();
 
-router.use(authMiddleware);
 
 router.get('/', async (req, res) => {
   Birthday.find({}, (error, birthday) => {
@@ -20,9 +19,10 @@ router.get('/', async (req, res) => {
       next();
     }
     res.json({ birthday });
-  }).populate('user');
+  });
 });
 
+router.use(authMiddleware);
 // CREATE
 router.post('/', async (req, res) => {
   try {

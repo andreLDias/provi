@@ -13,19 +13,19 @@ const Step = require('../models/Step');
 
 const router = express.Router();
 
-router.use(authMiddleware);
 
 // Display all
 router.get('/', async (req, res) => {
-  Cpf.find({}, (error, cpf) => {
+  Cpf.find({}, (error, cpfs) => {
     if(error){
       res.send("Error.");
       next();
     }
-    res.json({ cpf });
+    res.json({ cpfs });
   });
 });
 
+router.use(authMiddleware);
 // CREATE
 router.post('/', async (req, res) => {
   try {
