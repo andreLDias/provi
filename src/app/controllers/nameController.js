@@ -7,6 +7,7 @@ const authMiddleware = require('../middlewares/auth');
 const authConfig = require('../../config/auth')
 
 const Name = require('../models/Name');
+const Step = require('../models/Step');
 
 const router = express.Router();
 
@@ -47,8 +48,14 @@ router.post('/', async (req, res) => {
       throw new Error("Undefined name.")
     }
     const name = await Name.create({ firstName: firstName, lastName: lastName, user: req.userId });
+    const step = await Step.findOneAndUpdate({
+      user: req.userId
+    }, {
+      currentStep: "name_step",
+      next_end_point: "birthday_step",
+    })
 
-    return res.send({ name })
+    return res.send({ name, step })
   } catch (err) {
     return res.status(400).send({ error: "Error creating new name." })
   }

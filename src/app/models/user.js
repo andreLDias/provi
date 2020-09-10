@@ -14,10 +14,6 @@ const UserSchema = new mongoose.Schema({
     require: true,
     select: false, // Não traz a password no select
   },
-  cpf: {
-    type: String,
-    unique: true,
-  },
   createdAt: {
     type: Date,
     default: Date.now,

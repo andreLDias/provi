@@ -7,6 +7,7 @@ const authMiddleware = require('../middlewares/auth');
 const authConfig = require('../../config/auth')
 
 const Birthday = require('../models/Birthday');
+const Step = require('../models/Step');
 
 const router = express.Router();
 
@@ -39,7 +40,13 @@ router.post('/', async (req, res) => {
       throw new Error("Undefined phone.")
     }
     const birthday = await Birthday.create({ ...req.body, user: req.userId });
-    return res.send({ birthday })
+    const step = await Step.findOneAndUpdate({
+      user: req.userId
+    }, {
+      currentStep: "birthday_step",
+      next_end_point: "phone_step",
+    })
+    return res.send({ birthday, step })
   } catch (err) {
     return res.status(400).send({ error: "Error creating new Birthday." })
   }
@@ -59,14 +66,12 @@ router.get('/:birthdayId', async (req, res) => {
 // UPDATE
 router.put('/:birthdayId', async (req, res) => {
   try {
-    const { cep, street, number } = req.body;
-    const birthday = await Birthday.findByIdAndUpdate(req.params.birthdayId, {
-      cep,
-      street,
-      number
-    }, { new: true }).populate('user');
+    const { birthday } = req.body;
+    const birthday_instance = await Birthday.findByIdAndUpdate(req.params.birthdayId, {
+      birthday
+    }, { new: true });
 
-    return res.send({ birthday })
+    return res.send({ birthday_instance })
   } catch(err) {
     return res.status(400).send({ error: "Error updating the Birthday." })
   }

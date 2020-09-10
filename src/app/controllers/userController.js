@@ -1,11 +1,11 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { cpfValidator } = require('../validators')
 
 const authConfig = require('../../config/auth')
 
 const User = require('../models/User');
+const Step = require('../models/Step');
 
 const router = express.Router();
 
@@ -17,23 +17,31 @@ function generateToken(params = {}) {
 
 // register user
 router.post('/register', async (req, res) => {
-  const { email } = req.body;
+  const { email, password } = req.body;
 
   try {
     if(await User.findOne({ email })) {
       return res.status(400).send({ error: "User already exists." })
     }
     const user = await User.create(req.body);
+    const step = await Step.create({
+      user: req.userId,
+      currentStep: "user_registration",
+      next_end_point: "cpf_step",
+      isOver: false,
+    });
 
     user.password = undefined; // para nao mostrar o password
 
     res.send({
+      success: true,
       user,
+      step,
       token: generateToken({ id: user.id })
     });
 
-  } catch {
-    return res.status(400).send({ error: "Registration failed." })
+  } catch(err) {
+    return res.status(400).send({ error: "Registration failed." + err })
   }
 });
 
@@ -68,6 +76,7 @@ router.get('/all', async (req, res) => {
   }
 });
 
+//
 router.get('/:userId', async (req, res) => {
   try {
     const user = await User.findById(req.params.userId).populate('address');

@@ -7,6 +7,7 @@ const authMiddleware = require('../middlewares/auth');
 const authConfig = require('../../config/auth')
 
 const Amount = require('../models/Amount');
+const Step = require('../models/Step');
 
 const router = express.Router();
 
@@ -26,8 +27,14 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const amount = await Amount.create({ ...req.body, user: req.userId });
-
-    return res.send({ amount })
+    const step = await Step.findOneAndUpdate({
+      user: req.userId
+    }, {
+      currentStep: "amount_step",
+      next_end_point: "steps_over",
+      isOver: true,
+    })
+    return res.send({ amount, step })
   } catch (err) {
     return res.status(400).send({ error: "Error creating new Amount." })
   }

@@ -2,13 +2,13 @@ const mongoose = require('../../database');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 
-const Step = new mongoose.Schema({
+const StepSchema = new mongoose.Schema({
   currentStep: {
     type: String,
     require: true,
     default: "cpf",
   },
-  nextStep: {
+  next_end_point: {
     type: String,
     require: true,
   },
@@ -19,7 +19,8 @@ const Step = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    require: true
+    require: true,
+    unique: true
   },
   createdAt: {
     type: Date,

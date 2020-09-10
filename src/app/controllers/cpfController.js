@@ -1,14 +1,15 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { cpfValidator } = require('../validators')
 
 const authMiddleware = require('../middlewares/auth');
 
-const { cpfValidator } = require('../validators')
 
 const authConfig = require('../../config/auth')
 
 const Cpf = require('../models/Cpf');
+const Step = require('../models/Step');
 
 const router = express.Router();
 
@@ -42,8 +43,14 @@ router.post('/', async (req, res) => {
       throw new Error("Undefined cpf.")
     }
     const cpf = await Cpf.create({ cpfNumber, user: req.userId });
+    const step = await Step.findOneAndUpdate({
+      user: req.userId
+    }, {
+      currentStep: "cpf_step",
+      next_end_point: "name_step",
+    })
 
-    return res.send({ cpf })
+    return res.send({ cpf, step })
   } catch (err) {
     console.log("Errors", err);
     return res.status(400).send({ error: "Error creating new cpf." })
@@ -64,14 +71,12 @@ router.get('/:cpfId', async (req, res) => {
 // UPDATE
 router.put('/:cpfId', async (req, res) => {
   try {
-    const { cep, street, number } = req.body;
-    const cpf = await Cpf.findByIdAndUpdate(req.params.cpfId, {
-      cep,
-      street,
-      number
-    }, { new: true }).populate('user');
+    const { cpf } = req.body;
+    const cpf_instance = await Cpf.findByIdAndUpdate(req.params.cpfId, {
+      cpf
+    }, { new: true });
 
-    return res.send({ cpf })
+    return res.send({ cpf_instance })
   } catch(err) {
     return res.status(400).send({ error: "Error updating the Cpf." })
   }

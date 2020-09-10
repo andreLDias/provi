@@ -7,6 +7,7 @@ const authMiddleware = require('../middlewares/auth');
 const authConfig = require('../../config/auth')
 
 const Phone = require('../models/Phone');
+const Step = require('../models/Step');
 
 const router = express.Router();
 
@@ -40,8 +41,14 @@ router.post('/', async (req, res) => {
       throw new Error("Undefined phone.")
     }
     const phone = await Phone.create({ phoneNumber, user: req.userId });
+    const step = await Step.findOneAndUpdate({
+      user: req.userId
+    }, {
+      currentStep: "phone_step",
+      next_end_point: "address_step",
+    })
 
-    return res.send({ phone })
+    return res.send({ phone, step })
   } catch (err) {
     console.log("Errors", err);
     return res.status(400).send({ error: "Error creating new phone." })
@@ -62,12 +69,10 @@ router.get('/:phoneId', async (req, res) => {
 // UPDATE
 router.put('/:phoneId', async (req, res) => {
   try {
-    const { cep, street, number } = req.body;
+    const { phoneNumber } = req.body;
     const phone = await Phone.findByIdAndUpdate(req.params.phoneId, {
-      cep,
-      street,
-      number
-    }, { new: true }).populate('user');
+      phoneNumber
+    }, { new: true });
 
     return res.send({ phone })
   } catch(err) {

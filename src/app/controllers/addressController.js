@@ -7,6 +7,7 @@ const authMiddleware = require('../middlewares/auth');
 const authConfig = require('../../config/auth')
 
 const Address = require('../models/Address');
+const Step = require('../models/Step');
 
 const router = express.Router();
 
@@ -42,8 +43,13 @@ router.post('/', async (req, res) => {
       return res.send({ old_address })
     }
     const address = await Address.create({ ...req.body, user: req.userId });
-
-    return res.send({ address })
+    const step = await Step.findOneAndUpdate({
+      user: req.userId
+    }, {
+      currentStep: "address_step",
+      next_end_point: "amount_step",
+    });
+    return res.send({ address, step })
   } catch (err) {
     return res.status(400).send({ error: "Error creating new Address." })
   }
