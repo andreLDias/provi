@@ -1,8 +1,7 @@
 const CPF = require('cpf');
 
 const cpf_validator = (cpf) => {
-  formated_cpf = CPF.format(cpf);
-  isValid = CPF.isValid(formated_cpf);
+  isValid = CPF.isValid(cpf);
   return isValid
 }
 
