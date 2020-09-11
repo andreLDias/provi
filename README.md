@@ -1,7 +1,10 @@
 <p align="center">
-  <a href="https://images.assets-landingi.com/S5vU026SaVTa5ubV/provi_logo.png">
-    <img src="media/provi_logo.png" alt="Logo" width=25% height=25%>
+  <a href="https://provi.com.br/">
+    <img src="media/provi_logo_nobg.png" alt="Logo" width=50% height=50%>
   </a>
+  <p align="center">
+  Revolucionando a educação através de crédito descomplicado.
+  </p>
 </p>
 
 # Provi challenge
