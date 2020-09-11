@@ -43,7 +43,7 @@ describe("Users", () => {
     return await frisby
       .get('http://localhost:3000/users/all')
       .expect('status', 200)
-      .expect('jsonTypes', 'users.*', { // Assert *each* object in 'items' array
+      .expect('jsonTypes', 'users.*', {
         '_id': Joi.string().required(),
         'email': Joi.string().required(),
         'createdAt': Joi.date().iso().required(),
@@ -57,7 +57,7 @@ describe("CPFs", () => {
     return await frisby
       .get('http://localhost:3000/cpf/')
       .expect('status', 200)
-      .expect('jsonTypes', 'cpfs.*', { // Assert *each* object in 'items' array
+      .expect('jsonTypes', 'cpfs.*', {
         '_id': Joi.string().required(),
         'cpf': Joi.string().required(),
         'user': Joi.string().required(),
@@ -68,11 +68,11 @@ describe("CPFs", () => {
 });
 
 describe("Names", () => {
-  it ('It should verify if Names display correctly', async function () {
+  it ('It should verify if names display correctly', async function () {
     return await frisby
       .get('http://localhost:3000/name/')
       .expect('status', 200)
-      .expect('jsonTypes', 'names.*', { // Assert *each* object in 'items' array
+      .expect('jsonTypes', 'names.*', {
         '_id': Joi.string().required(),
         'firstName': Joi.string().required(),
         'lastName': Joi.string().required(),
@@ -84,11 +84,11 @@ describe("Names", () => {
 });
 
 describe("Birthdays", () => {
-  it ('It should verify if Birthdays display correctly', async function () {
+  it ('It should verify if birthdays display correctly', async function () {
     return await frisby
       .get('http://localhost:3000/birthday/')
       .expect('status', 200)
-      .expect('jsonTypes', 'birthdays.*', { // Assert *each* object in 'items' array
+      .expect('jsonTypes', 'birthdays.*', {
         '_id': Joi.string().required(),
         'birthday': Joi.string().required(),
         'user': Joi.string().required(),
@@ -99,11 +99,11 @@ describe("Birthdays", () => {
 });
 
 describe("Phones", () => {
-  it ('It should verify if Phones display correctly', async function () {
+  it ('It should verify if phones display correctly', async function () {
     return await frisby
       .get('http://localhost:3000/phone/')
       .expect('status', 200)
-      .expect('jsonTypes', 'phones.*', { // Assert *each* object in 'items' array
+      .expect('jsonTypes', 'phones.*', {
         '_id': Joi.string().required(),
         'phoneNumber': Joi.string().required(),
         'user': Joi.string().required(),
@@ -114,11 +114,11 @@ describe("Phones", () => {
 });
 
 describe("Addresses", () => {
-  it ('It should verify if Addresses display correctly', async function () {
+  it ('It should verify if addresses display correctly', async function () {
     return await frisby
       .get('http://localhost:3000/address/')
       .expect('status', 200)
-      .expect('jsonTypes', 'addresses.*', { // Assert *each* object in 'items' array
+      .expect('jsonTypes', 'addresses.*', {
         '_id': Joi.string().required(),
         'cep': Joi.string().required(),
         'street': Joi.string(),
@@ -134,11 +134,11 @@ describe("Addresses", () => {
 });
 
 describe("Amount", () => {
-  it ('It should verify if Amount display correctly', async function () {
+  it ('It should verify if amounts display correctly', async function () {
     return await frisby
       .get('http://localhost:3000/amount/')
       .expect('status', 200)
-      .expect('jsonTypes', 'amounts.*', { // Assert *each* object in 'items' array
+      .expect('jsonTypes', 'amounts.*', {
         '_id': Joi.string().required(),
         'amount': Joi.number().required(),
         'user': Joi.string().required(),

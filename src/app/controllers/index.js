@@ -2,8 +2,6 @@ const fs = require('fs');
 const path = require('path');
 const express = require('express');
 
-// const app = express();
-
 module.exports = app => {
   fs
     .readdirSync(__dirname)

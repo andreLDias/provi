@@ -5,7 +5,6 @@ const crypto = require('crypto');
 const AddressSchema = new mongoose.Schema({
   cep: {
     type: String,
-    unique: true,
     require: true,
     lowercase: true,
   },

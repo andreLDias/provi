@@ -34,16 +34,12 @@ router.post('/', async (req, res) => {
     if (!state) { state = (result.state); };
     if (!street) { street = (result.street); };
     if (!city) { city = (result.city); };
-    if (!complement) { number = "Sem complemento." };
+    if (!complement) { complement = "Sem complemento." };
     if (!number) { number = 0 };
 
     const old_address = await Address.findOne({
       cep: cep,
-      street: street,
       number: number,
-      complement: complement,
-      city: city,
-      state: state,
       user: req.userId
     });
     if(old_address) {
@@ -58,7 +54,7 @@ router.post('/', async (req, res) => {
       currentStep: "address_step",
       next_end_point: "amount_step",
     });
-    return res.send({ address, success: true, next_end_point: 'amount-date' });
+    return res.send({ address, success: true, next_end_point: 'amount_step' });
   } catch (err) {
     return res.status(400).send({ error: "Error creating new Address." })
   }

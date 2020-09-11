@@ -76,7 +76,7 @@ router.get('/all', async (req, res) => {
   }
 });
 
-//
+// READ
 router.get('/:userId', async (req, res) => {
   try {
     const user = await User.findById(req.params.userId).populate('address');
