@@ -28,16 +28,17 @@ The [challenge](https://github.com/provicapital/challenge_node) consists in buil
 * Express.js
 * Git
 * Jest (for testing)
-* Frisby (for testing the endpoints)
-* Bcryptjs
-* Body-parser
-* Cep-promise
-* Cep
-* Fs
-* Jsonwebtoken
+  * Frisby (for testing the endpoints)
 * MongoDB
-* Mongoose
+  * Mongoose (package to access MongoDB)
 * npm (to install and rule them all!)
+  * Bcryptjs
+  * Body-parser
+  * Cep-promise
+  * Cpf
+  * Fs
+  * Jsonwebtoken
+  * Path
 
 ## Installation :wrench:
 
