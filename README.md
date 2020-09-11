@@ -12,9 +12,9 @@
 ## Table of Contents
 
 * [About](#about)
-  * [Tech behind it](#tech-behind-it-:computer:)
-* [Installation](#installation-:wrench:)
-* [Using it](#using-it-👨‍💻)
+  * [Tech behind it](#tech-behind-it)
+* [Installation](#installation)
+* [Using it](#using-it‍)
 * [Testing](#testing)
 
 
@@ -22,8 +22,7 @@
 
 The [challenge](https://github.com/provicapital/challenge_node) consists in building an API to manage users and their info and data on loan requests.
 
-### Tech behind it :computer:
-
+### Tech behind it
 * Node.js
 * Express.js
 * Git
@@ -40,7 +39,7 @@ The [challenge](https://github.com/provicapital/challenge_node) consists in buil
   * Jsonwebtoken
   * Path
 
-## Installation :wrench:
+## Installation
 
 Download and install [node](https://nodejs.org/en/#home-downloadhead). <br>
 If you are on Linux, macOs or another OS, follow the Installation steps [here](https://nodejs.org/en/download/package-manager/). <br>
@@ -55,7 +54,7 @@ Open the project using your favorite IDE. Inside it, install all the packages us
 npm install
 ```
 
-## Using it 👨‍💻
+## Using it
 
 * Open the project on your terminal, on main folder `provi` type:
 ```sh
