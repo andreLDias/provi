@@ -14,7 +14,7 @@
 * [About](#about)
   * [Tech behind it](#tech-behind-it)
 * [Installation](#installation)
-* [Using it](#using-it‍)
+* [Using it](#using-it)
 * [Testing](#testing)
 
 
@@ -60,7 +60,7 @@ npm install
 ```sh
 node .\src\index
 ```
-* Use a third party software to use the API and access the endpoints.
+* Use a third-party software to use the API and access the endpoints.
 * The API is hosted at http://localhost:3000/
 * All models have a `.get` method on root path `/`. Use it to see all the records.
 ```
@@ -81,7 +81,7 @@ DELETE http://localhost:3000/table-name/id
 
 ## Testing
 
-* Run the project just like we did on [Using it!](#using-it!):
+* Run the project just like you did on [Using it](#using-it):
 ```sh
 node .\src\index
 ```
