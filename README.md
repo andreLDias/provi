@@ -12,9 +12,9 @@
 ## Table of Contents
 
 * [About](#about)
-  * [Tech behind it](#tech-behind-it)
-* [Installation](#installation)
-* [Using it!](#using-it!)
+  * [Tech behind it](#tech-behind-it-:computer:)
+* [Installation](#installation-:wrench:)
+* [Using it](#using-it-👨‍💻)
 * [Testing](#testing)
 
 
@@ -55,7 +55,7 @@ Open the project using your favorite IDE. Inside it, install all the packages us
 npm install
 ```
 
-## Using it! 👨‍💻
+## Using it 👨‍💻
 
 * Open the project on your terminal, on main folder `provi` type:
 ```sh
