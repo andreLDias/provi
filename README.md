@@ -47,7 +47,7 @@ Download and instal [MongoDB](https://docs.mongodb.com/manual/administration/ins
 Clone the repo wherever you want. <br>
 Use on terminal:
 ```sh
-git clone
+git clone https://github.com/andre-custodio/provi.git
 ```
 Open the project using your favorite IDE. Inside it, install all the packages using npm via terminal:
 ```sh
