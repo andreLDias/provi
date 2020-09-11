@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://images.assets-landingi.com/S5vU026SaVTa5ubV/provi_logo.png">
-    <img src="media/provi_logo.png" alt="Logo" width=40% height=40%>
+    <img src="media/provi_logo.png" alt="Logo" width=25% height=25%>
   </a>
 </p>
 
