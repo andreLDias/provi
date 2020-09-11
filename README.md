@@ -1,7 +1,23 @@
+<p align="center">
+  <a href="https://images.assets-landingi.com/S5vU026SaVTa5ubV/provi_logo.png">
+    <img src="media/provi_logo.png" alt="Logo" width=40% height=40%>
+  </a>
+</p>
+
 # Provi challenge
 
+## Table of Contents
+
+* [About](#about)
+  * [Tech behind it](#tech-behind-it)
+* [Installation](#installation)
+* [Using it!](#using-it!)
+* [Testing](#testing)
+
+
 ## About
-The project
+
+The [challenge](https://github.com/provicapital/challenge_node) consists in building an API to manage users and their info and data on loan requests.
 
 ### Tech behind it :computer:
 
@@ -9,9 +25,22 @@ The project
 * Express.js
 * Git
 * Jest (for testing)
-* npm
+* Frisby (for testing the endpoints)
+* Bcryptjs
+* Body-parser
+* Cep-promise
+* Cep
+* Fs
+* Jsonwebtoken
+* MongoDB
+* Mongoose
+* npm (to install and rule them all!)
 
-## Installation
+## Installation :wrench:
+
+Download and install [node](https://nodejs.org/en/#home-downloadhead). <br>
+If you are on Linux, macOs or another OS, follow the Installation steps [here](https://nodejs.org/en/download/package-manager/). <br>
+Download and instal [MongoDB](https://docs.mongodb.com/manual/administration/install-community/) (any OS). <br> <br>
 Clone the repo wherever you want. <br>
 Use on terminal:
 ```sh
@@ -22,13 +51,39 @@ Open the project using your favorite IDE. Inside it, install all the packages us
 npm install
 ```
 
-## Utilizando o projeto!
+## Using it! 👨‍💻
 
-<p> Aqui veremos como utilizar o projeto e subir localmente! </p>
+* Open the project on your terminal, on main folder `provi` type:
+```sh
+node .\src\index
+```
+* Use a third party software to use the API and access the endpoints.
+* The API is hosted at http://localhost:3000/
+* All models have a `.get` method on root path `/`. Use it to see all the records.
+```
+GET http://localhost:3000/table-name/
+```
+* You can create an instance using `.post` method on root path `/`.
+```
+POST http://localhost:3000/table-name/
+```
+* Update using `.put` on path `/:id`
+```
+PUT http://localhost:3000/table-name/id
+```
+* Delete using `.delete` on path `/:id`
+```
+DELETE http://localhost:3000/table-name/id
+```
 
-### Pré requistos
-* Alguma IDE. Aqui utilizo o VSCode para rodar localmente.
-* Conta Google para o projeto firebase.
-* Conta Netlify para subir o projeto em rede.
+## Testing
 
-### Rodando localmente
+* Run the project just like we did on [Using it!](#using-it!):
+```sh
+node .\src\index
+```
+* While running, open another terminal and inside root `/provi` type:
+```sh
+npm test
+```
+* This will run all the tests and return if it failed or succeed.
